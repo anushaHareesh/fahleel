@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 import "package:flutter_spinkit/flutter_spinkit.dart";
 import "package:flutter_tts/flutter_tts.dart";
 import "package:google_fonts/google_fonts.dart";
-
+import 'package:just_audio/just_audio.dart';
 import "package:provider/provider.dart";
 import "package:pull_to_refresh/pull_to_refresh.dart";
 import "package:qmanagement/screen/cheweiList.dart";
@@ -77,8 +77,8 @@ class _HospitalScreenState extends State<HospitalScreen> {
 
     // _controller!.setLooping(true);
     // play();
-    // _speak("Welcome,to , city / clinic", "init", 0, "en", "0");
-_speak("Token Number 7,8,8 , proceed to Room 2", "init", 0, "en", "0");
+    _speak("Welcome to city clinic", "init", 0, "en", "0");
+    // _speak("Token Number 7,8,8 , proceed to Room 2", "init", 0, "en", "0");
     Provider.of<Controller>(context, listen: false).getSettings(context);
     Provider.of<Controller>(context, listen: false).getQueueList(context, 0);
 
@@ -544,7 +544,7 @@ _speak("Token Number 7,8,8 , proceed to Room 2", "init", 0, "en", "0");
   ) async {
     print(
         "isspeaakkkk----${Provider.of<Controller>(context, listen: false).speechrate}");
-    if (isSpeak == "0") {
+     if (isSpeak == "0") {
       await flutterTts.setVolume(volume);
       await flutterTts.setPitch(pitch);
       await flutterTts.setSpeechRate(
@@ -616,6 +616,19 @@ _speak("Token Number 7,8,8 , proceed to Room 2", "init", 0, "en", "0");
     //     Provider.of<Controller>(context, listen: false).setColor(i - 1, false);
     //   }
     // }
+  }
+
+  playAudio() async {
+    final player = AudioPlayer(); // Create a player
+    final duration = await player.setUrl(// Load a URL
+        'https://foo.com/bar.mp3'); // Schemes: (https: | file: | asset: )
+    player.play(); // Play without waiting for completion
+    await player.play(); // Play while waiting for completion
+    await player.pause(); // Pause but remain ready to play
+    await player.seek(Duration(seconds: 10)); // Jump to the 10 second position
+    await player.setSpeed(2.0); // Twice as fast
+    await player.setVolume(0.5); // Half as loud
+    await player.stop();
   }
 
 ///////////////////////////////////////////////////////////////////////
